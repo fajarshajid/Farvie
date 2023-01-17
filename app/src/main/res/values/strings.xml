@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Farvie</string>
+
+    <!--PACKAGE APP-->
+    <string name="packagename">market://details?id=fajar.jinime</string>
+
+    <!--IMAGE URL-->
+    <string name="url_image_W92">https://image.tmdb.org/t/p/w92</string>
+    <string name="url_image_w154">https://image.tmdb.org/t/p/w154</string>
+    <string name="url_image_w185">https://image.tmdb.org/t/p/w185</string>
+    <string name="url_image_w342">https://image.tmdb.org/t/p/w342</string>
+    <string name="url_image_w500">https://image.tmdb.org/t/p/w500</string>
+    <string name="url_image_w780">https://image.tmdb.org/t/p/w780</string>
+    <string name="url_image_original">https://image.tmdb.org/t/p/original</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">103.191.92.122</domain>
+        <domain includeSubdomains="true">103.214.113.70</domain>
+        <domain includeSubdomains="true">192.168.1.8</domain>
+        <domain includeSubdomains="true">www.youtube.com</domain>
+    </domain-config>
+</network-security-config>

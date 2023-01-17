@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="hitam">#000000</color>
+    <color name="merah">#DA291C</color>
+    <color name="putih">#FEFEFE</color>
+    <color name="abuabu">#E4E4E4</color>
+    <color name="gray">#656C6B6B</color>
+</resources>
