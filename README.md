@@ -1,9 +1,11 @@
 # Farvie
 Movie app dengan TMDB API by Fajar Shajid
 
-HOME SCREEN
+<div>
+HOME SCREEN <br>
 <img src="https://user-images.githubusercontent.com/20371852/213115404-a8232ed2-72fd-4686-bfb8-48faf6d1965a.jpg" width="170">
 ![photo_2023-01-17_20-25-41](https://user-images.githubusercontent.com/20371852/213115404-a8232ed2-72fd-4686-bfb8-48faf6d1965a.jpg)
+</div
 
 DETAIL MOVIES
 ![photo_2023-01-18_14-59-01](https://user-images.githubusercontent.com/20371852/213115478-4b6f9c79-fe9f-4064-89a9-e41ec87a99e6.jpg)
