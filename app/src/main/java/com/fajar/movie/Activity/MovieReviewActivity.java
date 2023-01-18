@@ -181,7 +181,7 @@ public class MovieReviewActivity extends AppCompatActivity {
                                 movieReviewListModels.add(movieReviewListModel);
                             }
 
-                            if(jsonArrayResult.length() > 0){
+                            if(jsonArrayResult.length() > 0 || movieReviewListModels.size() > 0){
                                 review_loading.setVisibility(View.GONE);
                                 review_recyclerview.setVisibility(View.VISIBLE);
                                 review_shimmer.setVisibility(View.GONE);

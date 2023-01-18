@@ -235,7 +235,7 @@ public class MovieSearchActivity extends AppCompatActivity {
                                 movieListModels.add(movieListModel);
                             }
 
-                            if(jsonArray.length() > 0){
+                            if(jsonArray.length() > 0 || movieListModels.size() > 0){
                                 movies_loading.setVisibility(View.GONE);
                                 movie_recyclerview.setVisibility(View.VISIBLE);
                                 movie_shimmer.setVisibility(View.GONE);
