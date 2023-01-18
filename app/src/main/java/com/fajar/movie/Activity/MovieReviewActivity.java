@@ -55,6 +55,7 @@ public class MovieReviewActivity extends AppCompatActivity {
     private String url_review = Server.url_review;
     private List<MovieReviewListModel> movieReviewListModels;
     private MovieReviewListAdapter movieReviewListAdapter;
+    TextView preview_text;
     private LinearLayout review_linear;
     private RecyclerView review_recyclerview;
     private ProgressBar review_loading;
@@ -78,6 +79,7 @@ public class MovieReviewActivity extends AppCompatActivity {
 
 
             //MOVIES
+            preview_text = findViewById(R.id.preview_text);
             review_linear = findViewById(R.id.review_linear);
             review_recyclerview = findViewById(R.id.review_recyclerview);
             review_shimmer = findViewById(R.id.review_shimmer);
@@ -170,8 +172,6 @@ public class MovieReviewActivity extends AppCompatActivity {
                                 String created_at = object.getString("created_at");
                                 String content = object.getString("content");
 
-
-
                                 MovieReviewListModel movieReviewListModel = new MovieReviewListModel();
                                 movieReviewListModel.setAvatar_path(avatar_path);
                                 movieReviewListModel.setName(author);
@@ -181,20 +181,30 @@ public class MovieReviewActivity extends AppCompatActivity {
                                 movieReviewListModels.add(movieReviewListModel);
                             }
 
-                            review_loading.setVisibility(View.GONE);
-                            review_recyclerview.setVisibility(View.VISIBLE);
-                            review_shimmer.setVisibility(View.GONE);
-                            review_shimmer.stopShimmerAnimation();
+                            if(jsonArrayResult.length() > 0){
+                                review_loading.setVisibility(View.GONE);
+                                review_recyclerview.setVisibility(View.VISIBLE);
+                                review_shimmer.setVisibility(View.GONE);
+                                review_shimmer.stopShimmerAnimation();
 
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                            );
-                            params.setMargins(0, 0, 0, 0);
-                            review_linear.setLayoutParams(params);
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                );
+                                params.setMargins(0, 0, 0, 0);
+                                review_linear.setLayoutParams(params);
 
-                            review_recyclerview.setLayoutManager(linearLayoutManagerMovie);
-                            movieReviewListAdapter.notifyDataSetChanged();
+                                review_recyclerview.setLayoutManager(linearLayoutManagerMovie);
+                                movieReviewListAdapter.notifyDataSetChanged();
+                            }else{
+                                review_loading.setVisibility(View.GONE);
+                                review_recyclerview.setVisibility(View.GONE);
+                                review_shimmer.setVisibility(View.GONE);
+                                review_shimmer.stopShimmerAnimation();
+                                preview_text.setVisibility(View.VISIBLE);
+                            }
+
+                          
 
                         } catch (JSONException e) {
                             e.printStackTrace();

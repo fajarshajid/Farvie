@@ -104,21 +104,39 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="55dp"
             android:orientation="vertical">
+
 
             <!--MOVIES SECTION-->
             <LinearLayout
                 android:id="@+id/review_linear"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/preview_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/dua"
+                    android:gravity="center"
+                    android:text="Tidak ada review"
+                    android:textColor="@color/putih"
+                    android:textSize="14dp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
