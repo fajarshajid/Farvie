@@ -32,7 +32,7 @@ div.desc {
 
 <div class="gallery">
   <a target="_blank" href="#">
-    <img src="https://user-images.githubusercontent.com/20371852/213115404-a8232ed2-72fd-4686-bfb8-48faf6d1965a.jpg" alt="Cinque Terre" width="600" height="400">
+    <img src="https://user-images.githubusercontent.com/20371852/213115404-a8232ed2-72fd-4686-bfb8-48faf6d1965a.jpg" alt="Cinque Terre" width="100">
   </a>
   <div class="desc">HOME SCREEN</div>
 </div>
