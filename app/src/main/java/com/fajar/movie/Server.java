@@ -9,6 +9,7 @@ public class Server {
     public static final String url_movie_genre = "https://api.themoviedb.org/3/movie/";
     public static final String url_preview = "https://api.themoviedb.org/3/movie/";
     public static final String url_related = "https://api.themoviedb.org/3/movie/";
+    public static final String url_search = "https://api.themoviedb.org/3/search/movie";
 }
 
 

@@ -96,7 +96,22 @@
             android:theme="@style/AppTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
-                <action android:name="movieabygenrectivity" />
+                <action android:name="movieabygenreactivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Activity.MovieSearchActivity"
+            android:configChanges="orientation"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="moviesearchactivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

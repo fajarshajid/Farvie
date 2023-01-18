@@ -1,8 +1,16 @@
 package com.fajar.movie.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,23 +42,23 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MovieByGenreActivity extends AppCompatActivity {
+public class MovieSearchActivity extends AppCompatActivity {
 
     //REQUEST
     private RequestQueue requestQueue;
 
-    //STRING GENRE
-    int id;
-    String name;
 
     //VARIABLE
     CardView btn_kembali;
-    TextView genre_name;
-    CardView btn_cari;
+    EditText txt_cari;
+    TextView preview_text;
+
 
     //DISCOVER MOVIES BY GENRE
-    private String url_movie = Server.url_movie + "?api_key=" + Server.api_key;
+    private String url_search = Server.url_search + "?api_key=" + Server.api_key;
     private List<MovieListModel> movieListModels;
     private MovieListAdapter movieListAdapter;
     private LinearLayout movies_linear;
@@ -63,18 +71,13 @@ public class MovieByGenreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_by_genre);
+        setContentView(R.layout.activity_movie_search);
 
         try {
-            //STRING
-            id = Integer.parseInt(getIntent().getStringExtra("id"));
-            name = getIntent().getStringExtra("name");
-
             //VARIABLE
             btn_kembali = findViewById(R.id.btn_kembali);
-            genre_name = findViewById(R.id.genre_name);
-            btn_cari = findViewById(R.id.btn_cari);
-
+            txt_cari = findViewById(R.id.txt_cari);
+            preview_text = findViewById(R.id.preview_text);
 
             //MOVIES
             movies_linear = findViewById(R.id.movies_linear);
@@ -83,9 +86,6 @@ public class MovieByGenreActivity extends AppCompatActivity {
             movies_loading = findViewById(R.id.movies_loading);
             movieListModels = new ArrayList<>();
 
-            //SET VALUE
-            genre_name.setText(name);
-
             btn_kembali.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -93,20 +93,12 @@ public class MovieByGenreActivity extends AppCompatActivity {
                 }
             });
 
-            btn_cari.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent in = new Intent(MovieByGenreActivity.this, MovieSearchActivity.class);
-                    startActivity(in);
-                }
-            });
-
 
             //ENDLESS RECYCLERVIEW MOVIE
             try {
-                movieListAdapter = new MovieListAdapter(movieListModels, MovieByGenreActivity.this);
+                movieListAdapter = new MovieListAdapter(movieListModels, MovieSearchActivity.this);
                 linearLayoutManagerMovie = new GridLayoutManager(
-                        MovieByGenreActivity.this, 3,
+                        MovieSearchActivity.this, 3,
                         LinearLayoutManager.VERTICAL,
                         false);
                 movie_recyclerview.setLayoutManager(linearLayoutManagerMovie);
@@ -126,15 +118,50 @@ public class MovieByGenreActivity extends AppCompatActivity {
                         movies_linear.setLayoutParams(params);
 
                         movie_page = movie_page + 1;
-                        movie("popularity.desc", true, true, movie_page, "flatrate", id);
+                        movie(txt_cari.getText().toString().trim(), movie_page, true);
                     }
                 });
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            movie_page = 1;
-            movie("popularity.desc", true, true, movie_page, "flatrate", id);
+            txt_cari.addTextChangedListener(new TextWatcher() {
+                boolean hint;
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    try {
+                        movieListModels.clear();
+                        movieListAdapter.notifyDataSetChanged();
+
+                        int SplashDuration1 = 800;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    movie_page = 1;
+                                    movie(txt_cari.getText().toString().trim(), movie_page, true);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, SplashDuration1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -146,30 +173,26 @@ public class MovieByGenreActivity extends AppCompatActivity {
         finish();
     }
 
-    private void movie(String sort_by,
-                       boolean include_adult,
-                       boolean include_video,
-                       int movie_page,
-                       String with_watch_monetization_types,
-                       int with_genres) {
+    private void movie(String query,
+                       int page,
+                       boolean include_adult) {
 
         if (movieListModels.size() > 0) {
+            preview_text.setVisibility(View.GONE);
             movie_recyclerview.setVisibility(View.VISIBLE);
             movie_shimmer.setVisibility(View.GONE);
             movie_shimmer.stopShimmerAnimation();
         } else {
+            preview_text.setVisibility(View.GONE);
             movie_recyclerview.setVisibility(View.GONE);
             movie_shimmer.setVisibility(View.VISIBLE);
             movie_shimmer.startShimmerAnimation();
         }
 
-        final StringRequest request = new StringRequest(Request.Method.GET, url_movie +
-                "&sort_by=" + sort_by +
-                "&include_adult=" + include_adult +
-                "&include_video=" + include_video +
-                "&page=" + movie_page +
-                "&with_watch_monetization_types=" + with_watch_monetization_types +
-                "&with_genres=" + with_genres,
+        final StringRequest request = new StringRequest(Request.Method.GET, url_search +
+                "&query=" + query +
+                "&page=" + page +
+                "&include_adult=" + include_adult,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -212,20 +235,29 @@ public class MovieByGenreActivity extends AppCompatActivity {
                                 movieListModels.add(movieListModel);
                             }
 
-                            movies_loading.setVisibility(View.GONE);
-                            movie_recyclerview.setVisibility(View.VISIBLE);
-                            movie_shimmer.setVisibility(View.GONE);
-                            movie_shimmer.stopShimmerAnimation();
+                            if(jsonArray.length() > 0){
+                                movies_loading.setVisibility(View.GONE);
+                                movie_recyclerview.setVisibility(View.VISIBLE);
+                                movie_shimmer.setVisibility(View.GONE);
+                                movie_shimmer.stopShimmerAnimation();
 
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT
-                            );
-                            params.setMargins(0, 0, 0, 0);
-                            movies_linear.setLayoutParams(params);
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                );
+                                params.setMargins(0, 0, 0, 0);
+                                movies_linear.setLayoutParams(params);
 
-                            movie_recyclerview.setLayoutManager(linearLayoutManagerMovie);
-                            movieListAdapter.notifyDataSetChanged();
+                                movie_recyclerview.setLayoutManager(linearLayoutManagerMovie);
+                                movieListAdapter.notifyDataSetChanged();
+                            }else{
+                                movies_loading.setVisibility(View.GONE);
+                                movie_recyclerview.setVisibility(View.GONE);
+                                movie_shimmer.setVisibility(View.GONE);
+                                movie_shimmer.stopShimmerAnimation();
+                                preview_text.setVisibility(View.VISIBLE);
+                            }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -265,7 +297,7 @@ public class MovieByGenreActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(MovieByGenreActivity.this);
+            requestQueue = Volley.newRequestQueue(MovieSearchActivity.this);
         }
         requestQueue.add(request);
 

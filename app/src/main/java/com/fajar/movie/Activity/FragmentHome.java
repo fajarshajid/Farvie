@@ -118,6 +118,13 @@ public class FragmentHome extends Fragment {
 
         try {
             btn_cari = view.findViewById(R.id.btn_cari);
+            btn_cari.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(getActivity(), MovieSearchActivity.class);
+                    startActivity(in);
+                }
+            });
 
             //REFRESH
             swipe = view.findViewById(R.id.swipe);

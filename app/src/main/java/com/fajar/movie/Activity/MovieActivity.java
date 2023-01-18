@@ -1,5 +1,6 @@
 package com.fajar.movie.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,6 +63,8 @@ public class MovieActivity extends AppCompatActivity {
     CardView btn_cari;
     ImageView img_backdrop_path;
     ImageView img_poster_path;
+    CardView card_review;
+    TextView txt_review_name;
     TextView txt_vote_average;
     TextView txt_original_title;
     TextView txt_overview;
@@ -114,6 +117,8 @@ public class MovieActivity extends AppCompatActivity {
             btn_cari = findViewById(R.id.btn_cari);
             img_backdrop_path = findViewById(R.id.backdrop_path);
             img_poster_path = findViewById(R.id.poster_path);
+            card_review = findViewById(R.id.card_review);
+            txt_review_name = findViewById(R.id.txt_review_name);
             txt_vote_average = findViewById(R.id.vote_average);
             txt_original_title = findViewById(R.id.original_title);
             txt_overview = findViewById(R.id.overview);
@@ -128,7 +133,8 @@ public class MovieActivity extends AppCompatActivity {
             btn_cari.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent in = new Intent(MovieActivity.this, MovieSearchActivity.class);
+                    startActivity(in);
                 }
             });
 
