@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,6 +58,8 @@ public class MovieActivity extends AppCompatActivity {
     String adult, backdrop_path, id, original_language, original_title, overview, poster_path, popularity, title, release_date, video, vote_average, vote_count;
 
     //VARIABLE
+    CardView btn_kembali;
+    CardView btn_cari;
     ImageView img_backdrop_path;
     ImageView img_poster_path;
     TextView txt_vote_average;
@@ -106,11 +109,28 @@ public class MovieActivity extends AppCompatActivity {
             vote_average = getIntent().getStringExtra("vote_average");
             vote_count = getIntent().getStringExtra("vote_count");
 
+            //VARIABLE
+            btn_kembali = findViewById(R.id.btn_kembali);
+            btn_cari = findViewById(R.id.btn_cari);
             img_backdrop_path = findViewById(R.id.backdrop_path);
             img_poster_path = findViewById(R.id.poster_path);
             txt_vote_average = findViewById(R.id.vote_average);
             txt_original_title = findViewById(R.id.original_title);
             txt_overview = findViewById(R.id.overview);
+
+            btn_kembali.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+
+            btn_cari.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
 
             //NUMBER FORMAT
             Locale localeID = new Locale("in", "ID");
@@ -120,11 +140,11 @@ public class MovieActivity extends AppCompatActivity {
             symbols.setCurrencySymbol("");
             decimalFormat.setDecimalFormatSymbols(symbols);
 
-            //VOTE AVARAGE
+            //SET VOTE AVARAGE
             String str_vote_average = decimalFormat.format(Double.parseDouble(vote_average));
             txt_vote_average.setText(str_vote_average);
 
-            //TITLE & OVERVIEW
+            //SET TITLE & OVERVIEW
             txt_original_title.setText(title);
             txt_overview.setText(overview);
 
@@ -167,6 +187,12 @@ public class MovieActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     //GENRE

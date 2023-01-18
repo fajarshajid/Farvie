@@ -13,6 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fajar.movie.Activity.MovieActivity;
+import com.fajar.movie.Activity.MovieByGenreActivity;
 import com.fajar.movie.Model.GenreListModel;
 import com.fajar.movie.R;
 
@@ -32,13 +34,10 @@ public class GenreMovieListAdapter extends RecyclerView.Adapter<GenreMovieListAd
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.listitem_movies_genre, parent, false);
+        View view = inflater.inflate(R.layout.listitem_movie_genre, parent, false);
 
         return new Holder(view);
     }
-
-
-
 
     @SuppressLint("RecyclerView")
     @Override
@@ -48,12 +47,10 @@ public class GenreMovieListAdapter extends RecyclerView.Adapter<GenreMovieListAd
             holder.card_genre.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    holder.linear_genre.setBackgroundResource(R.drawable.border_selected);
-                    holder.txt_genre_name.setTextColor(mContext.getResources().getColor(R.color.putih));
-                    Intent intent = new Intent("genre");
-                    intent.putExtra("id", model.getId());
-                    intent.putExtra("position", String.valueOf(position));
-                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                    Intent in = new Intent(mContext, MovieByGenreActivity.class);
+                    in.putExtra("id", model.getId());
+                    in.putExtra("name", model.getName());
+                    mContext.startActivity(in);
                 }
             });
 
