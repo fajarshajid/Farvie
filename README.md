@@ -45,7 +45,6 @@ Movie app dengan TMDB API by Fajar Shajid
 </body>
 </html>
 
-
 Screen Recorder
 https://user-images.githubusercontent.com/20371852/213120380-3bb5c038-3b26-41b5-af46-b2b5060afd8b.mp4
 
