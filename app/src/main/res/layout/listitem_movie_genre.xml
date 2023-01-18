@@ -37,7 +37,7 @@
                     android:layout_marginRight="5dp"
                     android:textColor="@color/hitam"
                     android:text="Genre Name"
-                    android:textSize="7dp"
+                    android:textSize="9dp"
                     android:textStyle="normal" />
 
             </LinearLayout>

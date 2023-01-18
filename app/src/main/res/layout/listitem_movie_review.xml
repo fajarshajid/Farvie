@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/btn_satpamdetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/avatar_path"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginRight="0dp"
+                            android:foregroundGravity="center"
+                            android:gravity="center|top"
+                            android:src="@drawable/blank_user"
+                            android:textAlignment="center"
+                            app:civ_border_color="@android:color/transparent"
+                            app:civ_border_width="2dp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:background="@drawable/border_selected"
+                            android:fontFamily="@font/dua"
+                            android:gravity="left"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="Anton Sudarsono"
+                            android:textColor="@color/putih"
+                            android:textSize="10dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:fontFamily="@font/satu"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/putih"
+                            android:textSize="11dp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/created_at"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:background="@drawable/border_unselected"
+                            android:fontFamily="@font/dua"
+                            android:gravity="right"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="17-05-2022"
+                            android:textColor="@color/hitam"
+                            android:textSize="10dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/satu"
+                            android:gravity="left"
+                            android:text="Review"
+                            android:textColor="@color/hitam"
+                            android:textSize="11dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:fontFamily="@font/dua"
+                            android:gravity="left"
+                            android:text="Aktif"
+                            android:textColor="@color/putih"
+                            android:textSize="10dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/abuabu" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

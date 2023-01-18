@@ -25,16 +25,13 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.fajar.movie.Adapter.GenreMovieListAdapter;
-import com.fajar.movie.Adapter.MovieListAdapter;
+import com.fajar.movie.Adapter.MovieGenreListAdapter;
 import com.fajar.movie.Adapter.RelatedListAdapter;
 import com.fajar.movie.CacheRequest;
-import com.fajar.movie.Adapter.GenreHomeListAdapter;
 import com.fajar.movie.Model.GenreListModel;
 import com.fajar.movie.Adapter.PreviewListAdapter;
 import com.fajar.movie.Model.MovieListModel;
 import com.fajar.movie.Model.PreviewListModel;
-import com.fajar.movie.Model.TrendingListModel;
 import com.fajar.movie.R;
 import com.fajar.movie.Server;
 
@@ -43,10 +40,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +64,7 @@ public class MovieActivity extends AppCompatActivity {
     ImageView img_backdrop_path;
     ImageView img_poster_path;
     CardView card_review;
+    TextView txt_release_date;
     TextView txt_review_name;
     TextView txt_vote_average;
     TextView txt_original_title;
@@ -72,7 +73,7 @@ public class MovieActivity extends AppCompatActivity {
     //GENRE
     private static String url_movie_genre = Server.url_movie_genre;
     private List<GenreListModel> genreListModels;
-    private GenreMovieListAdapter genreMovieListAdapter;
+    private MovieGenreListAdapter movieGenreListAdapter;
     private RecyclerView genre_recyclerview;
     private ShimmerFrameLayout genre_shimmer;
 
@@ -118,6 +119,7 @@ public class MovieActivity extends AppCompatActivity {
             img_backdrop_path = findViewById(R.id.backdrop_path);
             img_poster_path = findViewById(R.id.poster_path);
             card_review = findViewById(R.id.card_review);
+            txt_release_date = findViewById(R.id.release_date);
             txt_review_name = findViewById(R.id.txt_review_name);
             txt_vote_average = findViewById(R.id.vote_average);
             txt_original_title = findViewById(R.id.original_title);
@@ -138,6 +140,16 @@ public class MovieActivity extends AppCompatActivity {
                 }
             });
 
+            card_review.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(MovieActivity.this, MovieReviewActivity.class);
+                    in.putExtra("id", id);
+                    in.putExtra("title", title);
+                    startActivity(in);
+                }
+            });
+
             //NUMBER FORMAT
             Locale localeID = new Locale("in", "ID");
             DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(localeID);
@@ -149,6 +161,19 @@ public class MovieActivity extends AppCompatActivity {
             //SET VOTE AVARAGE
             String str_vote_average = decimalFormat.format(Double.parseDouble(vote_average));
             txt_vote_average.setText(str_vote_average);
+
+            //DATE
+            if (release_date.length() > 4) {
+                txt_release_date.setVisibility(View.VISIBLE);
+                DateFormat outputFormat = new SimpleDateFormat("yyyy", Locale.US);
+                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                Date date = inputFormat.parse(release_date);
+                String str_release_date = outputFormat.format(date);
+                txt_release_date.setText(str_release_date);
+            } else {
+                txt_release_date.setVisibility(View.GONE);
+            }
+
 
             //SET TITLE & OVERVIEW
             txt_original_title.setText(title);
@@ -235,14 +260,14 @@ public class MovieActivity extends AppCompatActivity {
                             genreListModel.setName(name);
 
                             genreListModels.add(genreListModel);
-                            genreMovieListAdapter = new GenreMovieListAdapter(genreListModels, MovieActivity.this);
+                            movieGenreListAdapter = new MovieGenreListAdapter(genreListModels, MovieActivity.this);
                             LinearLayoutManager linearLayoutManagerGenre = new GridLayoutManager(
                                     MovieActivity.this, 1,
                                     LinearLayoutManager.HORIZONTAL,
                                     false);
                             genre_recyclerview.setLayoutManager(linearLayoutManagerGenre);
                             genre_recyclerview.setItemAnimator(new DefaultItemAnimator());
-                            genre_recyclerview.setAdapter(genreMovieListAdapter);
+                            genre_recyclerview.setAdapter(movieGenreListAdapter);
                         }
 
                         genre_recyclerview.setVisibility(View.VISIBLE);

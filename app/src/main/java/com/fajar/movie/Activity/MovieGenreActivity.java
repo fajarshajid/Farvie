@@ -35,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieByGenreActivity extends AppCompatActivity {
+public class MovieGenreActivity extends AppCompatActivity {
 
     //REQUEST
     private RequestQueue requestQueue;
@@ -63,7 +63,7 @@ public class MovieByGenreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_by_genre);
+        setContentView(R.layout.activity_movie_genre);
 
         try {
             //STRING
@@ -96,7 +96,7 @@ public class MovieByGenreActivity extends AppCompatActivity {
             btn_cari.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent in = new Intent(MovieByGenreActivity.this, MovieSearchActivity.class);
+                    Intent in = new Intent(MovieGenreActivity.this, MovieSearchActivity.class);
                     startActivity(in);
                 }
             });
@@ -104,9 +104,9 @@ public class MovieByGenreActivity extends AppCompatActivity {
 
             //ENDLESS RECYCLERVIEW MOVIE
             try {
-                movieListAdapter = new MovieListAdapter(movieListModels, MovieByGenreActivity.this);
+                movieListAdapter = new MovieListAdapter(movieListModels, MovieGenreActivity.this);
                 linearLayoutManagerMovie = new GridLayoutManager(
-                        MovieByGenreActivity.this, 3,
+                        MovieGenreActivity.this, 3,
                         LinearLayoutManager.VERTICAL,
                         false);
                 movie_recyclerview.setLayoutManager(linearLayoutManagerMovie);
@@ -265,7 +265,7 @@ public class MovieByGenreActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(MovieByGenreActivity.this);
+            requestQueue = Volley.newRequestQueue(MovieGenreActivity.this);
         }
         requestQueue.add(request);
 

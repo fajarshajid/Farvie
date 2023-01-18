@@ -87,7 +87,7 @@
         </activity>
 
         <activity
-            android:name=".Activity.MovieByGenreActivity"
+            android:name=".Activity.MovieGenreActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:hardwareAccelerated="true"
@@ -112,6 +112,21 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="moviesearchactivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Activity.MovieReviewActivity"
+            android:configChanges="orientation"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="moviereviewactivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -10,23 +10,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fajar.movie.Activity.MovieActivity;
-import com.fajar.movie.Activity.MovieByGenreActivity;
+import com.fajar.movie.Activity.MovieGenreActivity;
 import com.fajar.movie.Model.GenreListModel;
 import com.fajar.movie.R;
 
 import java.util.List;
 
 
-public class GenreMovieListAdapter extends RecyclerView.Adapter<GenreMovieListAdapter.Holder> {
+public class MovieGenreListAdapter extends RecyclerView.Adapter<MovieGenreListAdapter.Holder> {
 
     private List<GenreListModel> mListData;
     private Context mContext;
 
-    public GenreMovieListAdapter(List<GenreListModel> mListData, Context context) {
+    public MovieGenreListAdapter(List<GenreListModel> mListData, Context context) {
         this.mListData = mListData;
         this.mContext = context;
     }
@@ -47,7 +45,7 @@ public class GenreMovieListAdapter extends RecyclerView.Adapter<GenreMovieListAd
             holder.card_genre.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent in = new Intent(mContext, MovieByGenreActivity.class);
+                    Intent in = new Intent(mContext, MovieGenreActivity.class);
                     in.putExtra("id", model.getId());
                     in.putExtra("name", model.getName());
                     mContext.startActivity(in);
