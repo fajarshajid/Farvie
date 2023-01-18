@@ -1,8 +1,7 @@
-package com.fajar.movie.MovieList;
+package com.fajar.movie.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.DisplayMetrics;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +9,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.fajar.movie.Activity.MovieActivity;
+import com.fajar.movie.Model.MovieListModel;
 import com.fajar.movie.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Holder> {
 
@@ -43,6 +46,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Hold
     public void onBindViewHolder(final Holder holder, int position) {
         final MovieListModel model = mListData.get(position);
 
+        //NUMBER FORMAT
+        Locale localeID = new Locale("in", "ID");
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(localeID);
+        decimalFormat.setMaximumFractionDigits(1);
+        DecimalFormatSymbols symbols = decimalFormat.getDecimalFormatSymbols();
+        symbols.setCurrencySymbol("");
+        decimalFormat.setDecimalFormatSymbols(symbols);
+
+        //VOTE AVARAGE
+        String str_vote_average = decimalFormat.format(Double.parseDouble(model.getVote_average()));
+        holder.vote_average.setText(str_vote_average);
+
         //poster_path
         Glide
                 .with(mContext)
@@ -55,7 +70,21 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Hold
         holder.btn_movies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent in = new Intent(mContext, MovieActivity.class);
+                in.putExtra("adult", model.getAdult());
+                in.putExtra("backdrop_path", model.getBackdrop_path());
+                in.putExtra("id", model.getId());
+                in.putExtra("original_language", model.getOriginal_language());
+                in.putExtra("original_title", model.getOriginal_title());
+                in.putExtra("overview", model.getOverview());
+                in.putExtra("poster_path", model.getPoster_path());
+                in.putExtra("popularity", model.getPopularity());
+                in.putExtra("title", model.getTitle());
+                in.putExtra("release_date", model.getRelease_date());
+                in.putExtra("video", model.getVideo());
+                in.putExtra("vote_average", model.getVote_average());
+                in.putExtra("vote_count", model.getVote_count());
+                mContext.startActivity(in);
             }
         });
 
@@ -71,12 +100,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Hold
 
         private LinearLayout btn_movies;
         private ImageView poster_path;
+        private TextView vote_average;
 
         public Holder(View itemView) {
             super(itemView);
             btn_movies = itemView.findViewById(R.id.btn_movies);
             poster_path = itemView.findViewById(R.id.poster_path);
-
+            vote_average = itemView.findViewById(R.id.vote_average);
         }
     }
 

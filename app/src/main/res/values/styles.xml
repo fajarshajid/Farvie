@@ -22,6 +22,12 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
+    <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <!-- removing the dialog's action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppBottomSheetDialogTheme"
         parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowSoftInputMode">adjustResize</item>

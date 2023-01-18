@@ -3,15 +3,11 @@ package com.fajar.movie;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.fajar.movie.MainActivity.MainActivity;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import com.fajar.movie.Activity.MainActivity;
 
 public class Splash extends AppCompatActivity {
     Animation anim;

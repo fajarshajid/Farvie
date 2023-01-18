@@ -1,6 +1,7 @@
-package com.fajar.movie.TrendingList;
+package com.fajar.movie.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.fajar.movie.MovieList.MovieListModel;
+import com.fajar.movie.Activity.MovieActivity;
+import com.fajar.movie.Model.TrendingListModel;
 import com.fajar.movie.R;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
         this.mContext = mContext;
         this.viewPager = viewPager;
     }
+
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,7 +73,21 @@ public class TrendingListAdapter extends RecyclerView.Adapter<TrendingListAdapte
         holder.backdrop_path.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent in = new Intent(mContext, MovieActivity.class);
+                in.putExtra("adult", model.getAdult());
+                in.putExtra("backdrop_path", model.getBackdrop_path());
+                in.putExtra("id", model.getId());
+                in.putExtra("original_language", model.getOriginal_language());
+                in.putExtra("original_title", model.getOriginal_title());
+                in.putExtra("overview", model.getOverview());
+                in.putExtra("poster_path", model.getPoster_path());
+                in.putExtra("popularity", model.getPopularity());
+                in.putExtra("title", model.getTitle());
+                in.putExtra("release_date", model.getRelease_date());
+                in.putExtra("video", model.getVideo());
+                in.putExtra("vote_average", model.getVote_average());
+                in.putExtra("vote_count", model.getVote_count());
+                mContext.startActivity(in);
             }
         });
 

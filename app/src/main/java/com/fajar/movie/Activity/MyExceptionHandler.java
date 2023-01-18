@@ -1,4 +1,4 @@
-package com.fajar.movie.MainActivity;
+package com.fajar.movie.Activity;
 
 import android.app.Activity;
 import android.app.AlarmManager;

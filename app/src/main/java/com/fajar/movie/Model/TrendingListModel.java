@@ -1,7 +1,7 @@
-package com.fajar.movie.MovieList;
+package com.fajar.movie.Model;
 
 
-public class MovieListModel {
+public class TrendingListModel {
     private String adult;
     private String backdrop_path;
     private String id;
@@ -10,6 +10,7 @@ public class MovieListModel {
     private String original_title;
     private String overview;
     private String poster_path;
+    private String media_type;
     private String popularity;
     private String release_date;
     private String video;
@@ -17,22 +18,23 @@ public class MovieListModel {
     private String vote_count;
 
 
-    public MovieListModel() {
+    public TrendingListModel() {
     }
 
-    public MovieListModel(String adult,
-                          String backdrop_path,
-                          String id,
-                          String title,
-                          String original_language,
-                          String original_title,
-                          String overview,
-                          String poster_path,
-                          String popularity,
-                          String release_date,
-                          String video,
-                          String vote_average,
-                          String vote_count) {
+    public TrendingListModel(String adult,
+                             String backdrop_path,
+                             String id,
+                             String title,
+                             String original_language,
+                             String original_title,
+                             String overview,
+                             String poster_path,
+                             String media_type,
+                             String popularity,
+                             String release_date,
+                             String video,
+                             String vote_average,
+                             String vote_count) {
         this.adult = adult;
         this.backdrop_path = backdrop_path;
         this.id = id;
@@ -41,6 +43,7 @@ public class MovieListModel {
         this.original_title = original_title;
         this.overview = overview;
         this.poster_path = poster_path;
+        this.media_type = media_type;
         this.popularity = popularity;
         this.release_date = release_date;
         this.video = video;
@@ -112,6 +115,13 @@ public class MovieListModel {
         this.poster_path = poster_path;
     }
 
+    public String getMedia_type() {
+        return media_type;
+    }
+
+    public void setMedia_type(String media_type) {
+        this.media_type = media_type;
+    }
 
     public String getPopularity() {
         return popularity;

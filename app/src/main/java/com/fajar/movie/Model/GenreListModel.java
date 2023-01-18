@@ -1,4 +1,4 @@
-package com.fajar.movie.GenreList;
+package com.fajar.movie.Model;
 
 
 public class GenreListModel {

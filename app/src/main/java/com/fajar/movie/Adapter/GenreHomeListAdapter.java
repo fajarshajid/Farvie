@@ -1,4 +1,4 @@
-package com.fajar.movie.GenreList;
+package com.fajar.movie.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,19 +13,20 @@ import androidx.cardview.widget.CardView;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fajar.movie.Model.GenreListModel;
 import com.fajar.movie.R;
 
 import java.util.List;
 
 
-public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Holder> {
+public class GenreHomeListAdapter extends RecyclerView.Adapter<GenreHomeListAdapter.Holder> {
 
     private List<GenreListModel> mListData;
     private Context mContext;
     private int selectedItem;
     private int selectedPosition = -1;
 
-    public GenreListAdapter(List<GenreListModel> mListData, Context context) {
+    public GenreHomeListAdapter(List<GenreListModel> mListData, Context context) {
         this.mListData = mListData;
         this.mContext = context;
         selectedItem = 0;

@@ -4,6 +4,9 @@
     <!--PACKAGE APP-->
     <string name="packagename">market://details?id=fajar.jinime</string>
 
+    <!--API KEY YOUTUBE-->
+    <string name="apikey_youtube">AIzaSyCnQA1waym0Ca53012IzY39YE32SwpXhKY</string>
+
     <!--IMAGE URL-->
     <string name="url_image_W92">https://image.tmdb.org/t/p/w92</string>
     <string name="url_image_w154">https://image.tmdb.org/t/p/w154</string>

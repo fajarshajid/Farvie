@@ -1,4 +1,4 @@
-package com.fajar.movie.MainActivity;
+package com.fajar.movie.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -43,14 +41,14 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.fajar.movie.BuildConfig;
 import com.fajar.movie.CacheRequest;
 import com.fajar.movie.EndlessRecyclerViewScrollListener;
-import com.fajar.movie.GenreList.GenreListAdapter;
-import com.fajar.movie.GenreList.GenreListModel;
-import com.fajar.movie.MovieList.MovieListAdapter;
-import com.fajar.movie.MovieList.MovieListModel;
+import com.fajar.movie.Adapter.GenreHomeListAdapter;
+import com.fajar.movie.Model.GenreListModel;
+import com.fajar.movie.Adapter.MovieListAdapter;
+import com.fajar.movie.Model.MovieListModel;
 import com.fajar.movie.R;
 import com.fajar.movie.Server;
-import com.fajar.movie.TrendingList.TrendingListAdapter;
-import com.fajar.movie.TrendingList.TrendingListModel;
+import com.fajar.movie.Adapter.TrendingListAdapter;
+import com.fajar.movie.Model.TrendingListModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -60,9 +58,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FragmentHome extends Fragment {
     //REQUEST
@@ -85,7 +81,7 @@ public class FragmentHome extends Fragment {
     //GENRE
     private static String url_genre = Server.url_genre + "?api_key=" + Server.api_key;
     private List<GenreListModel> genreListModels;
-    private GenreListAdapter genreListAdapter;
+    private GenreHomeListAdapter genreHomeListAdapter;
     private RecyclerView genre_recyclerview;
     private ShimmerFrameLayout genre_shimmer;
     private LinearLayoutManager linearLayoutManagerGenre;
@@ -444,14 +440,14 @@ public class FragmentHome extends Fragment {
 
                             genreListModels.add(genreListModel);
                             try {
-                                genreListAdapter = new GenreListAdapter(genreListModels, getActivity());
+                                genreHomeListAdapter = new GenreHomeListAdapter(genreListModels, getActivity());
                                 linearLayoutManagerGenre = new GridLayoutManager(
                                         getActivity(), 1,
                                         LinearLayoutManager.HORIZONTAL,
                                         false);
                                 genre_recyclerview.setLayoutManager(linearLayoutManagerGenre);
                                 genre_recyclerview.setItemAnimator(new DefaultItemAnimator());
-                                genre_recyclerview.setAdapter(genreListAdapter);
+                                genre_recyclerview.setAdapter(genreHomeListAdapter);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
