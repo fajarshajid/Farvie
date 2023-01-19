@@ -126,8 +126,7 @@ public class MovieSearchActivity extends AppCompatActivity {
             }
 
             txt_cari.addTextChangedListener(new TextWatcher() {
-                private Timer timer = new Timer();
-                String str_cari;
+                boolean hint;
 
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -136,28 +135,43 @@ public class MovieSearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    str_cari = txt_cari.getText().toString();
+                    try {
+                        int SplashDuration1 = 500;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                movieListModels.clear();
+                                movieListAdapter.notifyDataSetChanged();
+                                preview_text.setVisibility(View.GONE);
+                                movie_recyclerview.setVisibility(View.GONE);
+                                movie_shimmer.setVisibility(View.VISIBLE);
+                                movie_shimmer.startShimmerAnimation();
+                            }
+                        }, SplashDuration1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
                     try {
-                        timer.scheduleAtFixedRate(new TimerTask() {
+                        int SplashDuration1 = 1200;
+                        new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    movieListModels.clear();
-                                    movieListAdapter.notifyDataSetChanged();
                                     movie_page = 1;
-                                    movie(str_cari, movie_page, true);
+                                    movie(txt_cari.getText().toString().trim(), movie_page, true);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                        }, 1000, 1000);
+                        }, SplashDuration1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                 }
             });
 
