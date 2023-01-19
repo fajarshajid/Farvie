@@ -127,7 +127,7 @@ public class MovieSearchActivity extends AppCompatActivity {
 
             txt_cari.addTextChangedListener(new TextWatcher() {
                 private Timer timer = new Timer();
-                private final long DELAY = 1000; // Milliseconds
+                String str_cari;
 
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -136,27 +136,28 @@ public class MovieSearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                    str_cari = txt_cari.getText().toString();
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    timer.cancel();
-                    timer = new Timer();
-                    timer.schedule(
-                            new TimerTask() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        movieListModels.clear();
-                                        movieListAdapter.notifyDataSetChanged();
-                                        movie_page = 1;
-                                        movie(txt_cari.getText().toString().trim(), movie_page, true);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                    try {
+                        timer.scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                try {
+                                    movieListModels.clear();
+                                    movieListAdapter.notifyDataSetChanged();
+                                    movie_page = 1;
+                                    movie(str_cari, movie_page, true);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            }, DELAY);
+                            }
+                        }, 1000, 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -233,7 +234,7 @@ public class MovieSearchActivity extends AppCompatActivity {
                                 movieListModels.add(movieListModel);
                             }
 
-                            if (jsonArray.length() > 0 || movieListModels.size() > 0) {
+                            if(jsonArray.length() > 0 || movieListModels.size() > 0){
                                 movies_loading.setVisibility(View.GONE);
                                 movie_recyclerview.setVisibility(View.VISIBLE);
                                 movie_shimmer.setVisibility(View.GONE);
@@ -248,7 +249,7 @@ public class MovieSearchActivity extends AppCompatActivity {
 
                                 movie_recyclerview.setLayoutManager(linearLayoutManagerMovie);
                                 movieListAdapter.notifyDataSetChanged();
-                            } else {
+                            }else{
                                 movies_loading.setVisibility(View.GONE);
                                 movie_recyclerview.setVisibility(View.GONE);
                                 movie_shimmer.setVisibility(View.GONE);
