@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -418,74 +420,68 @@ public class FragmentHome extends Fragment {
         genre_shimmer.setVisibility(View.VISIBLE);
         genre_shimmer.startShimmerAnimation();
 
-        CacheRequest request = new CacheRequest(Request.Method.GET, url_genre, new Response.Listener<NetworkResponse>() {
-            @Override
-            public void onResponse(NetworkResponse response) {
-                JSONObject jsonObject = null;
-                try {
-                    final String jsonString = new String(response.data,
-                            HttpHeaderParser.parseCharset(response.headers));
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_genre, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
 
-                    jsonObject = new JSONObject(jsonString);
-
-                    try {
-                        int sizet = genreListModels.size();
-                        if (sizet > 0) {
-                            genreListModels.clear();
-                        }
-
-                        JSONArray jsonArray = jsonObject.getJSONArray("genres");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            String id = object.getString("id");
-                            String name = object.getString("name");
-
-                            GenreListModel genreListModel = new GenreListModel();
-                            genreListModel.setId(id);
-                            genreListModel.setName(name);
-
-                            genreListModels.add(genreListModel);
-                            try {
-                                genreHomeListAdapter = new GenreHomeListAdapter(genreListModels, getActivity());
-                                linearLayoutManagerGenre = new GridLayoutManager(
-                                        getActivity(), 1,
-                                        LinearLayoutManager.HORIZONTAL,
-                                        false);
-                                genre_recyclerview.setLayoutManager(linearLayoutManagerGenre);
-                                genre_recyclerview.setItemAnimator(new DefaultItemAnimator());
-                                genre_recyclerview.setAdapter(genreHomeListAdapter);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            int sizet = genreListModels.size();
+                            if (sizet > 0) {
+                                genreListModels.clear();
                             }
-                        }
 
-                        genre_recyclerview.setVisibility(View.VISIBLE);
-                        genre_shimmer.setVisibility(View.GONE);
-                        genre_shimmer.stopShimmerAnimation();
-                        swipe.setRefreshing(false);
-                    } catch (JSONException e) {
+                            JSONArray jsonArray = response.getJSONArray("genres");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+
+                                GenreListModel genreListModel = new GenreListModel();
+                                genreListModel.setId(id);
+                                genreListModel.setName(name);
+
+                                genreListModels.add(genreListModel);
+                                try {
+                                    genreHomeListAdapter = new GenreHomeListAdapter(genreListModels, getActivity());
+                                    linearLayoutManagerGenre = new GridLayoutManager(
+                                            getActivity(), 1,
+                                            LinearLayoutManager.HORIZONTAL,
+                                            false);
+                                    genre_recyclerview.setLayoutManager(linearLayoutManagerGenre);
+                                    genre_recyclerview.setItemAnimator(new DefaultItemAnimator());
+                                    genre_recyclerview.setAdapter(genreHomeListAdapter);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            genre_recyclerview.setVisibility(View.VISIBLE);
+                            genre_shimmer.setVisibility(View.GONE);
+                            genre_shimmer.stopShimmerAnimation();
+                            swipe.setRefreshing(false);
+                        } catch (JSONException e) {
+
+                            genre_recyclerview.setVisibility(View.GONE);
+                            genre_shimmer.setVisibility(View.VISIBLE);
+                            genre_shimmer.stopShimmerAnimation();
+                            e.printStackTrace();
+                            swipe.setRefreshing(false);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                         genre_recyclerview.setVisibility(View.GONE);
                         genre_shimmer.setVisibility(View.VISIBLE);
                         genre_shimmer.stopShimmerAnimation();
-                        e.printStackTrace();
                         swipe.setRefreshing(false);
                     }
-                } catch (UnsupportedEncodingException | JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                genre_recyclerview.setVisibility(View.GONE);
-                genre_shimmer.setVisibility(View.VISIBLE);
-                genre_shimmer.stopShimmerAnimation();
-                swipe.setRefreshing(false);
-            }
-        });
+                }) {
+        };
 
         request.setRetryPolicy(new DefaultRetryPolicy(
                 1000,

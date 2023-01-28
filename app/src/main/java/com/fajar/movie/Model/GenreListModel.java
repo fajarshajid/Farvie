@@ -4,8 +4,6 @@ package com.fajar.movie.Model;
 public class GenreListModel {
     private String id;
     private String name;
-    private String kategorifoto;
-    private String kategorikeyword;
 
     public GenreListModel() {
     }
