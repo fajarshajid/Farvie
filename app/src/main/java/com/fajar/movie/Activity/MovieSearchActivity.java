@@ -56,6 +56,9 @@ public class MovieSearchActivity extends AppCompatActivity {
     EditText txt_cari;
     TextView preview_text;
 
+    //TIMER
+    Timer timer;
+
 
     //DISCOVER MOVIES BY GENRE
     private String url_search = Server.url_search + "?api_key=" + Server.api_key;
@@ -126,8 +129,6 @@ public class MovieSearchActivity extends AppCompatActivity {
             }
 
             txt_cari.addTextChangedListener(new TextWatcher() {
-                boolean hint;
-
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -135,20 +136,20 @@ public class MovieSearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    //STOP WHEN TYPES
                     try {
-                        int SplashDuration1 = 500;
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                movieListModels.clear();
-                                movieListAdapter.notifyDataSetChanged();
-                                preview_text.setVisibility(View.GONE);
-                                movie_recyclerview.setVisibility(View.GONE);
-                                movie_shimmer.setVisibility(View.VISIBLE);
-                                movie_shimmer.startShimmerAnimation();
-                            }
-                        }, SplashDuration1);
-                    } catch (Exception e) {
+                        if (timer != null) {
+                            timer.cancel();
+                        }
+
+                        //CLEAR LIST
+                        movieListModels.clear();
+                        movieListAdapter.notifyDataSetChanged();
+                        preview_text.setVisibility(View.GONE);
+                        movie_recyclerview.setVisibility(View.GONE);
+                        movie_shimmer.setVisibility(View.GONE);
+                        movie_shimmer.stopShimmerAnimation();
+                    }catch (Exception e){
                         e.printStackTrace();
                     }
                 }
@@ -156,18 +157,27 @@ public class MovieSearchActivity extends AppCompatActivity {
                 @Override
                 public void afterTextChanged(Editable s) {
                     try {
-                        int SplashDuration1 = 1200;
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    movie_page = 1;
-                                    movie(txt_cari.getText().toString().trim(), movie_page, true);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                        //WILL SEARCH AFTER DELAY 0.6 SEC WHEN TEXT MORE THEN 1 CHARACTER
+                        if(s.length() > 1){
+                            timer = new Timer();
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                movie_page = 1;
+                                                movie(txt_cari.getText().toString().trim(), movie_page, true);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+
                                 }
-                            }
-                        }, SplashDuration1);
+                            }, 600);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
